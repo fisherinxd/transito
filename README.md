@@ -13,10 +13,11 @@ Para crear nuestra base de datos, lo hacemos con el siguiente código:
 
 Para salirnos del cliente **psql** y de Postgres digitamos lo siguiente:
 >\q
+
 >exit
 
 Finalmente cuando ya tengamos todo nuestra base de datos en un archivo *.sql lo siguiente que tenemos que hacer es migrar todo el codigo a Postgres para que se organicen todos los datos, para esto tenemos que digitar en una terminal lo siguiente:
->psql -U postgres -W -h localhost nombre_base < archivo.sql
+>psql -U postgres -W -h localhost base_practica < archivo.sql
 
 
 # Usando Django
@@ -71,7 +72,7 @@ Si queremos una versión especifica solo tenemos colocar luego de la palabra dja
 >pip install django==1.8
 
 Teniendo Django instalado vamos a crear nuestro proyecto ,para esto nos situamos en la ruta donde queramos que vaya el proyecto y digitamos en la terminal lo siguiente:
->django-admin.py startproject miproyecto 
+>django-admin.py startproject transito 
 
 Suponiendo que tenemos todo configurado y que esta en marcha nuestra base de datos (en Postgres) vamos a configurar 
 un archivo que se crea a lo que iniciamos nuestro nuevo proyecto ,este es el archivo llamado **settings.py** ,lo abrimos y colocamos lo siguien:
@@ -89,12 +90,29 @@ DATABASES = {
  
  ```
 Ahora vamos a crear una aplicación para hacer funcionar todo , para esto nos vamos a la ruta que deseemos y digitamos esto en la terminal:
->python manage.py startapp nombre_de_la_app
+>python manage.py startapp app1
 
 En este punto ,solo nos falta el modelo de la base de datos en python  para que el administrador de Django pueda interpretar los datos , para eso tenemos que digitar el siguiente comando en la terminal:
 >python manage.py inspectdb > mysite/myapp/models.py
 
-este **inspectdb** lo que hace es determinar una representación del modelo que usara Django para cada una de las tablas de la base de datos y luego transforma todo eso en código Python ,finalmente nos crea un archivo **models.py** donde está todo el código generado en la ruta donde se indica en el comando. Como hemos generado el modelo dentro de la aplicacion solo tenemos que migrar todos los datos para que podamos ver los cambios. Para migrar los datos se digita lo siguiente:
+este **inspectdb** lo que hace es determinar una representación del modelo que usara Django para cada una de las tablas de la base de datos y luego transforma todo eso en código Python ,finalmente nos crea un archivo **models.py** donde está todo el código generado en la ruta donde se indica en el comando.
+De esta manera trabaja el **inspectdb**:
+``` [language]
+class Clasevehiculo(models.Model):
+    descripcion = models.CharField(max_length=60, blank=True, null=True)
+    idclasev = models.AutoField(primary_key=True)
+
+    class Meta:
+        managed = False
+        db_table = 'clasevehiculo'
+	verbose_name = u'Clase de vehiculo'
+        verbose_name_plural = u'Clase de vehiculos'
+    def __unicode__(self):
+return self.descripcion
+
+```
+
+Como hemos generado el modelo dentro de la aplicacion solo tenemos que migrar todos los datos para que podamos ver los cambios. Para migrar los datos se digita lo siguiente:
 >python manage.py makemigrations
 
 >python manage.py migrate
