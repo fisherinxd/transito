@@ -95,8 +95,33 @@ Ahora vamos a crear una aplicación para hacer funcionar todo , para esto nos va
 En este punto ,solo nos falta el modelo de la base de datos en python  para que el administrador de Django pueda interpretar los datos , para eso tenemos que digitar el siguiente comando en la terminal:
 >python manage.py inspectdb > mysite/myapp/models.py
 
-este **inspectdb** lo que hace es determinar una representación del modelo que usara Django para cada una de las tablas de la base de datos y luego transforma todo eso en código Python ,finalmente nos crea un archivo **models.py** donde está todo el código generado en la ruta donde se indica en el comando.
-De esta manera trabaja el **inspectdb**:
+Este **inspectdb** lo que hace es determinar una representación del modelo que usara Django para cada una de las tablas de la base de datos y luego transforma todo eso en código Python ,finalmente nos crea un archivo **models.py** donde está todo el código generado en la ruta donde se indica en el comando. Este es un breve resumen de la manera que trabaja el **inspectdb**:
+
+1.Cada tabla de la base de datos es convertida en una clase del modelo , se realiza un mapeo de las relaciones uno a uno entre las tablas de la base de datos y la clase del modelo (si tenemos atributos muchos a muchos tenemos que reestructurar)
+
+2.Django agrega automáticamente un campo de llave primaria si un modelo no tiene una 
+
+3.Si inspectdb no puede mapear un tipo de columna por ejemplo: varchar , date ; a un tipo de campo del modelo, usará TextField e insertará un comentario explicando que esa linea fue alterada
+
+4.Si un nombre de columna de la base de datos es una palabra reservada de Python, inspectdb agregará '_field' al nombre del atributo y establecerá el atributo db_column al nombre real del campo. Ejemplo:
+
+>for_field = models.IntegerField(db_column='for')
+
+6.inspectdb detecta claves primarias para PostgreSQL, MySQL y SQLite. Es decir, inserta primary_key=True donde sea necesario. Para otras bases de datos, necesitarás insertar primary_key=True para al menos un campo en cada modelo, ya que los modelos Django requieren tener un campo primary_key=True.
+
+
+##Código SQL:
+
+``` [language]
+CREATE TABLE clasevehiculo (
+    descripcion character(60),
+    idclasev integer NOT NULL
+);
+
+```
+
+##Código generado por el inspectdb:
+
 ``` [language]
 class Clasevehiculo(models.Model):
     descripcion = models.CharField(max_length=60, blank=True, null=True)
