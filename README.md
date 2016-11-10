@@ -120,7 +120,7 @@ CREATE TABLE clasevehiculo (
 
 ```
 
-##Código generado por el inspectdb:
+##Código Python generado por el inspectdb:
 
 ``` [language]
 class Clasevehiculo(models.Model):
