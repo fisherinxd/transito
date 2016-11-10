@@ -1,6 +1,26 @@
-# transito
-#Usando Django
-Django es un framework de desarrollo Web , este se enfoca en el modelo __mvc__ donde se distinguen los siguientes archivos : **models.py** ,**views.py** ,**urls.py** y el **index.html**; estos 4 tipos de archivos python son la parte principal donde cada uno realiza una parte esencial como por ejemplo:
+# Postgres
+Para este proyecto necesitamos utilizar el gesto de base de datos **Postgres**. Primero vamos a instalar Postgres de la siguiente maneja, abrimos una terminal  colocamos:
+>sudo apt-get install postgresql-server-dev-9.x
+
+Para entrar a Postgres desde el terminal tenemos que digitar el siguiente comando:
+>sudo -i -u postgres
+
+Ahora vamos a iniciar el cliente de **psql** para poder escribir nuestro código Sql:
+>psql
+
+Para crear nuestra base de datos, lo hacemos con el siguiente código:
+>create database base_practica with owner=usuario;
+
+Para salirnos del cliente **psql** y de Postgres digitamos lo siguiente:
+>\q
+>exit
+
+Finalmente cuando ya tengamos todo nuestra base de datos en un archivo *.sql lo siguiente que tenemos que hacer es migrar todo el codigo a Postgres para que se organicen todos los datos, para esto tenemos que digitar en una terminal lo siguiente:
+>psql -U postgres -W -h localhost nombre_base < archivo.sql
+
+
+# Usando Django
+Django es un framework de desarrollo Web , este se enfoca en el modelo **mvt** donde se distinguen los siguientes archivos : **models.py** ,**views.py** ,**urls.py** y el **index.html**; estos 4 tipos de archivos python son la parte principal donde cada uno realiza una parte esencial como por ejemplo:
 ###models.py
 Contiene una descripción de la tabla de la base de datos , donde también podemos editar los distintos elementos que posee (usando cóigo python , no 'SQL')
 ###views.py
@@ -8,7 +28,7 @@ Contiene la lógica de la página, donde declaramos nuestras vistas y donde le v
 ###index.html
 No precisamente este archivo html se va a llamar 'index', puede tener cualquier nombre , en este archivo lo vamos a utilizar para hacer el diseño de nuestras plantillas , donde usaremos declaraciones que interprete Django
 
-#Instalando Django:
+# Instalando Django:
 Django esta escrito en código python por lo tanto tenemos que instalar la versión 2 o 3 de este mismo, por lo general en linux 'Ubuntu' ya llega instalado alguna versión pero para constatar que tenemos una abrimos una terminal y procedemos a digitar lo siquiente: **Python 2.7** o  **Python3** y nos aparecera algo como esto:
 >Python 3.5.2 (default, Aug  8 2016, 10:57:32) 
 [GCC 5.4.0 20160609] on linux
@@ -16,15 +36,14 @@ Type "help", "copyright", "credits" or "license" for more information.
 
 O si queremos alguna otra versión descargamos la que queramos de la página oficial aquí: [Descarga python](https://www.python.org/downloads) .Luego de descargarlo instalamos manualmente el archivo **.tar** 
 
-Seguidamente tenemos que hacer un __update__ para tener actualizados los repositorios de nuestro sistemas, asi que en una terminal digitamos : 
+Seguidamente tenemos que hacer un **update** para tener actualizados los repositorios de nuestro sistemas, asi que en una terminal digitamos : 
 >sudo apt-get update
 
 Luego instalamos todos los paquetes necesarios de python ,para esto digitamos en la terminal:
 >sudo apt-get install python-dev
 sudo apt-get install python-setuptools
 
-Una característica de Django es que llega con una base de datos por defecto (sqlite). Pero nosotros vamos a trabajar con el gestor de base de datos **Postgres** por lo cual necesitamos instalarlo con el siguiente comando:
->sudo apt-get install postgresql-server-dev-9.x
+Una característica de Django es que llega con una base de datos por defecto (sqlite). Pero nosotros vamos a trabajar con el gestor de base de datos **Postgres** el cual ya lo instalamos anteriormente
 
 Ahora necesitamos instalar un entorno virtual para poder manejar nuestros proyectos independientemente uno del otro para no generar conflicto entre  versiónes. 
 Cuando instalamos el paquete **python-setuptools** este nos da la opción de usar el  **easy_install** , el cual nos permite instalar facilmente los paquetes que necesitemos ;ahora con este comando vamos a instalar los paquetes necesarios para que funcione nuestro entorno virtual, asi que vamos a la terminal y digitamos:
@@ -43,7 +62,7 @@ Segundo ,procedemos a la activación con la siguiente linea:
 Ahora que ya estamos dentro del entorno ,tenemos que instalar una libreria de Postgres para Python ,y asi poder sincronizar todo correctamente con la base de datos, así que en la terminal digitamos el siguiente comando:
 >pip install psycopg2
 
-( __**pip** ya está instalado si estamos utilizando Python2 o Python3, también se instalará si estamos trabajando en un entorno virtual__ )
+( **pip** ya está instalado si estamos utilizando Python2 o Python3, también se instalará si estamos trabajando en un entorno virtual )
 
 Ahora si vamos a instalar Django, solo tenemos que digitar en la terminal lo siquiente:
 >pip install django
